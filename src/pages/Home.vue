@@ -25,7 +25,7 @@
             </a>
           </div>
         </div>
-        <div class="hero-phone-wrap">
+        <div class="hero-phone-wrap animate-fade-up delay-400">
           <div class="phone-frame pixel6pro">
             <!-- Camera bar (Pixel 6 Pro signature) -->
             <div class="pixel-camera-bar">

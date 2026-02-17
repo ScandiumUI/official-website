@@ -1,12 +1,12 @@
 <template>
   <section class="screenshot-gallery">
     <div class="wrapper">
-      <div class="section-header">
+      <div class="section-header" data-reveal>
         <h2>{{ t('screenshots.title') }}</h2>
         <p>{{ t('screenshots.subtitle') }}</p>
       </div>
 
-      <div class="gallery-container">
+      <div class="gallery-container" data-reveal data-reveal-delay="200">
         <swiper
           :modules="modules"
           :effect="'coverflow'"
@@ -60,10 +60,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules'
-import { useI18n } from '../i18n/index.js'
+import { computed } from 'vue'
 import screenshot1 from '../assets/photo_1_2026-02-17_18-13-15.jpg'
 import screenshot2 from '../assets/photo_2_2026-02-17_18-13-15.jpg'
 import screenshot3 from '../assets/photo_3_2026-02-17_18-13-15.jpg'
@@ -71,12 +70,15 @@ import screenshot4 from '../assets/photo_4_2026-02-17_18-13-15.jpg'
 import screenshot5 from '../assets/photo_5_2026-02-17_18-13-15.jpg'
 import screenshot6 from '../assets/photo_6_2026-02-17_18-13-15.jpg'
 import screenshot7 from '../assets/photo_7_2026-02-17_18-13-15.jpg'
+import { useScrollReveal } from '../composables/useScrollReveal.js'
+import { useI18n } from '../i18n/index.js'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
 
 const { t } = useI18n()
+useScrollReveal()
 
 const modules = [EffectCoverflow, Pagination, Autoplay]
 
