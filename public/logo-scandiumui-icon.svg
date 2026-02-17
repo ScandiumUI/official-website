@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="icoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(206, 100%, 85%)"/>
+      <stop offset="100%" stop-color="hsl(206, 80%, 65%)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Android head -->
+  <path d="M176 200 C176 148, 336 148, 336 200 L336 238 C336 252, 176 252, 176 238 Z" fill="none" stroke="url(#icoGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Eyes -->
+  <circle cx="220" cy="204" r="8" fill="hsl(206, 100%, 81%)"/>
+  <circle cx="292" cy="204" r="8" fill="hsl(206, 100%, 81%)"/>
+
+  <!-- Antennas -->
+  <line x1="224" y1="152" x2="208" y2="124" stroke="hsl(206, 100%, 81%)" stroke-width="6" stroke-linecap="round"/>
+  <line x1="288" y1="152" x2="304" y2="124" stroke="hsl(206, 100%, 81%)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Body -->
+  <rect x="176" y="258" width="160" height="130" rx="10" fill="none" stroke="url(#icoGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Arms -->
+  <rect x="140" y="270" width="26" height="85" rx="13" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="6"/>
+  <rect x="346" y="270" width="26" height="85" rx="13" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="6"/>
+
+  <!-- Legs -->
+  <rect x="206" y="388" width="28" height="60" rx="14" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="6"/>
+  <rect x="278" y="388" width="28" height="60" rx="14" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="6"/>
+</svg>

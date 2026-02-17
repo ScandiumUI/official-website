@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="scGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(206, 100%, 85%)"/>
+      <stop offset="100%" stop-color="hsl(206, 80%, 60%)"/>
+    </linearGradient>
+    <linearGradient id="scGradBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(252, 12%, 15%)"/>
+      <stop offset="100%" stop-color="hsl(252, 10%, 9%)"/>
+    </linearGradient>
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="48" fill="url(#scGradBg)"/>
+
+  <!-- Outer orbit rings (atom-like) -->
+  <ellipse cx="256" cy="256" rx="220" ry="90" fill="none" stroke="hsl(206, 80%, 65%)" stroke-width="1" opacity="0.15" transform="rotate(-30, 256, 256)"/>
+  <ellipse cx="256" cy="256" rx="220" ry="90" fill="none" stroke="hsl(206, 80%, 65%)" stroke-width="1" opacity="0.15" transform="rotate(30, 256, 256)"/>
+  <ellipse cx="256" cy="256" rx="220" ry="90" fill="none" stroke="hsl(206, 80%, 65%)" stroke-width="1" opacity="0.15" transform="rotate(90, 256, 256)"/>
+
+  <!-- Orbit dots (electrons) -->
+  <circle cx="256" cy="36" r="5" fill="hsl(206, 100%, 81%)" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="62" cy="368" r="5" fill="hsl(206, 100%, 81%)" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="450" cy="368" r="5" fill="hsl(206, 100%, 81%)" opacity="0.6" filter="url(#glow)"/>
+
+  <!-- Center element card -->
+  <rect x="156" y="130" width="200" height="252" rx="16" fill="hsl(252, 10%, 11%)" stroke="url(#scGrad)" stroke-width="2.5" opacity="0.95"/>
+
+  <!-- Element number -->
+  <text x="180" y="168" font-family="'Courier New', 'SF Mono', monospace" font-weight="400" font-size="20" fill="hsl(206, 80%, 65%)" opacity="0.7">21</text>
+
+  <!-- Sc symbol (large) -->
+  <text x="256" y="265" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="300" font-size="96" fill="url(#scGrad)" filter="url(#glow)">Sc</text>
+
+  <!-- Element name -->
+  <text x="256" y="310" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="400" font-size="18" fill="hsl(206, 100%, 81%)" letter-spacing="4" opacity="0.8">SCANDIUM</text>
+
+  <!-- Atomic weight -->
+  <text x="256" y="340" text-anchor="middle" font-family="'Courier New', 'SF Mono', monospace" font-weight="400" font-size="14" fill="hsl(206, 80%, 65%)" opacity="0.5">44.956</text>
+
+  <!-- Subtle android head integrated into card bottom -->
+  <path d="M236 350 C236 340, 276 340, 276 350 L276 356 C276 358, 236 358, 236 356 Z" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+  <circle cx="246" cy="349" r="1.5" fill="hsl(206, 100%, 81%)" opacity="0.35"/>
+  <circle cx="266" cy="349" r="1.5" fill="hsl(206, 100%, 81%)" opacity="0.35"/>
+  <line x1="248" y1="342" x2="244" y2="336" stroke="hsl(206, 100%, 81%)" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+  <line x1="264" y1="342" x2="268" y2="336" stroke="hsl(206, 100%, 81%)" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- Bottom text -->
+  <text x="256" y="430" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="700" font-size="30" fill="hsl(206, 100%, 94%)" letter-spacing="1">ScandiumUI</text>
+  <text x="256" y="460" text-anchor="middle" font-family="'Courier New', 'SF Mono', monospace" font-weight="400" font-size="12" fill="hsl(206, 80%, 65%)" letter-spacing="2" opacity="0.5">CUSTOM ANDROID 16 ROM</text>
+</svg>

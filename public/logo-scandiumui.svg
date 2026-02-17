@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(206, 100%, 85%)"/>
+      <stop offset="100%" stop-color="hsl(206, 80%, 65%)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="248" fill="hsl(252, 10%, 11%)" stroke="hsl(206, 100%, 81%)" stroke-width="2" opacity="0.95"/>
+
+  <!-- Android head -->
+  <path d="M196 185 C196 152, 316 152, 316 185 L316 210 C316 220, 196 220, 196 210 Z" fill="none" stroke="url(#logoGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Eyes -->
+  <circle cx="228" cy="187" r="6" fill="hsl(206, 100%, 81%)"/>
+  <circle cx="284" cy="187" r="6" fill="hsl(206, 100%, 81%)"/>
+
+  <!-- Antennas -->
+  <line x1="230" y1="155" x2="218" y2="135" stroke="hsl(206, 100%, 81%)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="282" y1="155" x2="294" y2="135" stroke="hsl(206, 100%, 81%)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Body -->
+  <rect x="196" y="218" width="120" height="100" rx="8" fill="none" stroke="url(#logoGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Arms -->
+  <rect x="168" y="228" width="20" height="65" rx="10" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="5"/>
+  <rect x="324" y="228" width="20" height="65" rx="10" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="5"/>
+
+  <!-- Legs -->
+  <rect x="218" y="318" width="22" height="50" rx="10" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="5"/>
+  <rect x="272" y="318" width="22" height="50" rx="10" fill="none" stroke="hsl(206, 100%, 81%)" stroke-width="5"/>
+
+  <!-- Text: Scandium -->
+  <text x="256" y="415" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="700" font-size="38" fill="hsl(206, 100%, 94%)" letter-spacing="1">Scandium</text>
+
+  <!-- Text: UI -->
+  <text x="256" y="450" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="300" font-size="32" fill="hsl(206, 100%, 81%)" letter-spacing="6">UI</text>
+</svg>
