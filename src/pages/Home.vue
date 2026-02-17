@@ -63,20 +63,22 @@
     <!-- UI Showcase Teaser -->
     <section class="ui-teaser">
       <div class="wrapper">
-        <div class="ui-teaser-grid">
+        <div class="ui-teaser-content">
           <div class="ui-teaser-text" data-reveal>
             <h2>{{ t('home.uiTitle') }} <span class="gradient-text">{{ t('home.uiTitleHighlight') }}</span></h2>
             <p>{{ t('home.uiDesc') }}</p>
-            <router-link to="/wiki" class="md3-btn md3-btn-outlined" style="margin-top: 1rem;">
-              <span class="material-symbols-outlined" style="font-size: 20px;">menu_book</span>
-              {{ t('home.learnMore') }}
-            </router-link>
           </div>
           <div class="ui-teaser-cards">
             <div v-for="(card, i) in uiCards" :key="card.icon" class="ui-mini-card md3-card-elevated" data-reveal :data-reveal-delay="100 + i * 100">
               <span class="material-symbols-outlined filled" style="font-size: 28px;">{{ card.icon }}</span>
               <span class="ui-mini-label">{{ card.label }}</span>
             </div>
+          </div>
+          <div class="ui-teaser-actions" data-reveal data-reveal-delay="500">
+            <router-link to="/wiki" class="md3-btn md3-btn-outlined">
+              <span class="material-symbols-outlined" style="font-size: 20px;">menu_book</span>
+              {{ t('home.learnMore') }}
+            </router-link>
           </div>
         </div>
       </div>
@@ -148,6 +150,7 @@ const uiCards = computed(() => [
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin-bottom: 4rem;
 }
 
 .hero-content {
@@ -306,14 +309,19 @@ const uiCards = computed(() => [
 
 /* === UI TEASER === */
 .ui-teaser {
-  padding: 4rem 0 6rem;
+  padding: 12rem 0 6rem;
 }
 
-.ui-teaser-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+.ui-teaser-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 3rem;
+}
+
+.ui-teaser-text {
+  max-width: 800px;
 }
 
 .ui-teaser-text h2 {
@@ -323,8 +331,15 @@ const uiCards = computed(() => [
 
 .ui-teaser-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.ui-teaser-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .ui-mini-card {
@@ -378,11 +393,28 @@ const uiCards = computed(() => [
 /* === RESPONSIVE === */
 @media (max-width: 1100px) {
   .hero-phone-wrap { display: none; }
+
+  .hero-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .hero-text {
+    align-items: center;
+    padding-top: 6rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 1024px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
-  .ui-teaser-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ui-teaser-cards { grid-template-columns: repeat(2, 1fr); }
   .cta-card { flex-direction: column; text-align: center; padding: 2.5rem; }
   .cta-actions { justify-content: center; }
 }
@@ -401,7 +433,6 @@ const uiCards = computed(() => [
 @media (max-width: 450px) {
   .hero { padding: 2rem 0 0; }
   .hero-content { width: min(92%, 80rem); }
-  .hero-text { padding-top: 2rem; }
   .hero-actions { flex-direction: column; width: 100%; }
   .hero-actions .md3-btn { width: 100%; justify-content: center; }
   .hero-socials { justify-content: center; }
@@ -409,7 +440,6 @@ const uiCards = computed(() => [
   .cta-actions { flex-direction: column; width: 100%; }
   .cta-actions .md3-btn { width: 100%; }
 }
-
 @media (max-height: 600px) {
   .hero { min-height: initial; }
 }

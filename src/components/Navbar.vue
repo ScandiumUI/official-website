@@ -477,9 +477,9 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 38px;
+  height: 34px;
+  border-radius: 10px;
   border: 1px solid var(--color-border);
   background: transparent;
   cursor: pointer;
@@ -510,7 +510,7 @@ onUnmounted(() => {
 }
 
 .theme-icon {
-  font-size: 20px;
+  font-size: 16px;
   color: var(--color-primary);
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
