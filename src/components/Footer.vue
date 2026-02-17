@@ -6,6 +6,7 @@
         <section class="footer-about">
           <router-link to="/" class="footer-logo">
             <span class="material-symbols-outlined filled" style="font-size: 28px; color: var(--color-primary);">android</span>
+            <span class="footer-brand"><span class="brand-highlight">Scandium</span>OS</span>
           </router-link>
           <p>{{ t('footer.desc') }}</p>
         </section>
@@ -31,9 +32,6 @@
       </div>
 
       <div class="footer-bottom">
-        <div class="footer-brand">
-          <span class="brand-highlight">Scandium</span>OS
-        </div>
         <span class="footer-copy">&copy; {{ currentYear }} ScandiumOS Team</span>
       </div>
     </div>
@@ -77,6 +75,7 @@ const currentYear = new Date().getFullYear()
   text-decoration: none;
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .footer-about p {
@@ -126,16 +125,17 @@ const currentYear = new Date().getFullYear()
 
 .footer-bottom {
   display: flex;
-  gap: 2rem;
+  justify-content: center;
   align-items: center;
   padding-top: 2rem;
   border-top: 1px solid var(--color-border);
 }
 
 .footer-brand {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   color: var(--color-text-one);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .brand-highlight {
