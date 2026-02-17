@@ -104,20 +104,20 @@ defineProps({
 }
 
 [data-theme="light"] .blob-tl {
-  opacity: 0.4;
-  filter: hue-rotate(190deg) saturate(0.7) brightness(1.1);
+  opacity: 0.6;
+  filter: hue-rotate(190deg) saturate(0.9) brightness(0.95);
 }
 [data-theme="light"] .blob-tr {
-  opacity: 0.3;
-  filter: hue-rotate(200deg) saturate(0.5) brightness(1.2);
+  opacity: 0.7;
+  filter: hue-rotate(200deg) saturate(0.9) brightness(0.9);
 }
 [data-theme="light"] .blob-bl {
-  opacity: 0.35;
-  filter: hue-rotate(180deg) saturate(0.6) brightness(1.0);
+  opacity: 0.55;
+  filter: hue-rotate(180deg) saturate(0.85) brightness(0.92);
 }
 [data-theme="light"] .blob-br {
-  opacity: 0.35;
-  filter: hue-rotate(170deg) saturate(0.65) brightness(1.05);
+  opacity: 0.55;
+  filter: hue-rotate(170deg) saturate(0.9) brightness(0.94);
 }
 
 @media (prefers-reduced-motion: reduce) {

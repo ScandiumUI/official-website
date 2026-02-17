@@ -1,14 +1,5 @@
 <template>
   <nav class="navbar" :class="{ scrolled: isScrolled }">
-    <button
-      class="menu-btn mobile-only"
-      :class="{ open: menuOpen }"
-      @click="menuOpen = !menuOpen"
-      aria-label="Menu"
-    >
-      <span class="menu-btn__burger"></span>
-    </button>
-
     <router-link to="/" class="logo-link">
       <span class="material-symbols-outlined filled logo-icon">android</span>
       <span class="logo-text"><span class="logo-highlight">Scandium</span>OS</span>
@@ -24,6 +15,14 @@
         <span class="mobile-lang-code">{{ currentLang }}</span>
       </button>
     </div>
+    <button
+      class="menu-btn mobile-only"
+      :class="{ open: menuOpen }"
+      @click="menuOpen = !menuOpen"
+      aria-label="Menu"
+    >
+      <span class="menu-btn__burger"></span>
+    </button>
 
     <div class="nav-container desktop-only">
       <div class="nav-wrapper">
@@ -72,6 +71,9 @@
     <transition name="sidebar">
       <div v-if="menuOpen" class="mobile-sidebar mobile-only">
         <div class="sidebar-content">
+          <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+          </div>
           <div class="sidebar-nav">
             <ul class="sidebar-buttons">
               <li v-for="link in navLinks" :key="link.name"
@@ -324,20 +326,27 @@ onUnmounted(() => {
   user-select: none;
   position: relative;
   display: flex;
-  height: 50px;
+  width: 34px;
+  height: 34px;
   z-index: 55;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   background: transparent;
-  border: none;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   padding: 0;
+  transition: background-color 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.menu-btn:hover {
+  background-color: var(--color-surface-three);
+  border-color: var(--color-primary);
 }
 
 .menu-btn__burger {
   display: flex;
-  flex-wrap: wrap;
-  width: 24px;
+  width: 18px;
   height: 2px;
   background: var(--color-surface-six);
   transition: all 0.3s ease-out;
@@ -348,32 +357,31 @@ onUnmounted(() => {
 .menu-btn__burger::after {
   content: '';
   position: absolute;
-  width: 24px;
+  width: 18px;
   height: 2px;
   background: var(--color-surface-six);
   transition: all 0.3s ease-out;
 }
 
 .menu-btn__burger::before {
-  transform: translateY(-6.5px);
+  transform: translateY(-5.5px);
 }
 
 .menu-btn__burger::after {
-  transform: translateY(6.5px);
+  transform: translateY(5.5px);
 }
 
 .menu-btn.open .menu-btn__burger {
-  transform: translateX(-10px);
   background: transparent;
   box-shadow: none;
 }
 
 .menu-btn.open .menu-btn__burger::before {
-  transform: rotate(45deg) translate(10px, -10px);
+  transform: rotate(45deg);
 }
 
 .menu-btn.open .menu-btn__burger::after {
-  transform: rotate(-45deg) translate(10px, 10px);
+  transform: rotate(-45deg);
 }
 
 .mobile-sidebar {
@@ -381,7 +389,7 @@ onUnmounted(() => {
   position: fixed;
   width: 20rem;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100%;
   background-color: var(--color-surface-eight);
   z-index: 52;
@@ -393,10 +401,24 @@ onUnmounted(() => {
   height: 100%;
   margin: 0 auto;
   width: 20rem;
-  border-radius: 0px 24px 24px 0px;
-  padding: 1rem;
-  padding-top: 6rem;
+  border-radius: 24px 0px 0px 24px;
+  padding: 0.65rem 1rem 1rem;
   justify-content: space-between;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  height: 45px;
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-one);
+  letter-spacing: -0.02em;
 }
 
 .sidebar-nav {
@@ -535,8 +557,13 @@ onUnmounted(() => {
   }
 
   .navbar {
-    justify-content: normal;
-    gap: 0.5rem;
+    justify-content: space-between;
+    gap: 0.25rem;
+    padding: 1rem 0.75rem 1rem 0.5rem;
+  }
+
+  .menu-btn {
+    margin-left: 0.20rem;
   }
 }
 
@@ -550,7 +577,7 @@ onUnmounted(() => {
 
 .sidebar-enter-from,
 .sidebar-leave-to {
-  transform: translateX(-100%);
+  transform: translateX(100%);
 }
 
 .fade-enter-active,

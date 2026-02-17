@@ -199,7 +199,6 @@ const uiCards = computed(() => [
   box-shadow: var(--shadow-elevation-3);
 }
 
-/* Pixel 6 Pro camera bar */
 .pixel-camera-bar {
   position: absolute;
   top: -4px;
@@ -217,7 +216,6 @@ const uiCards = computed(() => [
   overflow: hidden;
 }
 
-/* Pixel 6 Pro punch-hole camera */
 .pixel-punch-hole {
   position: absolute;
   top: 12px;
@@ -248,7 +246,6 @@ const uiCards = computed(() => [
 .phone-brand { font-size: 1.5rem; font-weight: 700; color: var(--color-text-one); letter-spacing: -0.02em; }
 .phone-ver { font-size: 3rem; font-weight: 800; color: var(--color-primary); opacity: 0.3; line-height: 1; }
 
-/* Pixel gesture nav pill */
 .pixel-nav-pill {
   width: 120px; height: 4px;
   background: var(--color-text-four);
@@ -307,7 +304,6 @@ const uiCards = computed(() => [
   line-height: 1.6;
 }
 
-/* === UI TEASER === */
 .ui-teaser {
   padding: 12rem 0 6rem;
 }
@@ -363,9 +359,8 @@ const uiCards = computed(() => [
   color: var(--color-text-four);
 }
 
-/* === CTA === */
 .cta-section {
-  padding: 2rem 0 6rem;
+  padding: 8rem 0 6rem;
 }
 
 .cta-card {
@@ -390,7 +385,6 @@ const uiCards = computed(() => [
   flex-shrink: 0;
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 1100px) {
   .hero-phone-wrap { display: none; }
 
@@ -422,7 +416,7 @@ const uiCards = computed(() => [
 @media (max-width: 768px) {
   .features-overview { padding: 4rem 0; }
   .ui-teaser { padding: 2rem 0 4rem; }
-  .cta-section { padding: 1rem 0 4rem; }
+  .cta-section { padding: 4rem 0 4rem; }
 }
 
 @media (max-width: 640px) {
