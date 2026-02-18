@@ -1,6 +1,7 @@
 export default {
   nav: {
     home: 'Home',
+    download: 'Download',
     wiki: 'Wiki',
     source: 'Source',
     contributors: 'Contributors',

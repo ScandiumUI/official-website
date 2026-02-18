@@ -1,6 +1,7 @@
 export default {
   nav: {
     home: 'Beranda',
+    download: 'Unduh',
     wiki: 'Wiki',
     source: 'Sumber',
     contributors: 'Kontributor',

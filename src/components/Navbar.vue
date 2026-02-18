@@ -125,8 +125,8 @@ const currentLang = computed(() => locale.value)
 
 const navLinks = computed(() => [
   { name: t('nav.home'), to: '/' },
+  { name: t('nav.download'), to: '/download' },
   { name: t('nav.wiki'), to: '/wiki' },
-  { name: t('nav.source'), to: '/source' },
   { name: t('nav.about'), to: '/about' },
 ])
 

@@ -1,64 +1,5 @@
 <template>
   <div class="source-page">
-    <!-- Hero -->
-    <section class="page-hero">
-      <div class="wrapper">
-        <div class="page-hero-content animate-fade-up">
-          <h1>{{ t('download.title') }}</h1>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Release Card -->
-    <section class="release-section">
-      <div class="wrapper">
-        <div class="release-hero animate-fade-up">
-          <div class="release-card md3-card-elevated" data-reveal>
-            <div class="release-card-header">
-              <div class="release-icon">
-                <span class="material-symbols-outlined filled" style="font-size: 36px;">android</span>
-              </div>
-              <div class="release-info">
-                <h2>{{ t('download.releaseTitle') }}</h2>
-                <p>{{ t('download.releaseDesc') }}</p>
-              </div>
-              <div class="release-badges">
-                <div class="info-chip">
-                  <span class="material-symbols-outlined" style="font-size: 14px;">verified</span>
-                  {{ t('download.signedBuild') }}
-                </div>
-                <div class="info-chip">
-                  <span class="material-symbols-outlined" style="font-size: 14px;">security</span>
-                  Feb 2026 SPL
-                </div>
-                <div class="info-chip">
-                  <span class="material-symbols-outlined" style="font-size: 14px;">code</span>
-                  {{ t('download.openSource') }}
-                </div>
-              </div>
-            </div>
-
-            <div class="release-meta">
-              <div v-for="(meta, i) in releaseMeta" :key="meta.icon" class="meta-item" data-reveal :data-reveal-delay="i * 100">
-                <span class="material-symbols-outlined meta-icon" style="font-size: 20px;">{{ meta.icon }}</span>
-                <div class="meta-text">
-                  <span class="meta-label">{{ meta.label }}</span>
-                  <span class="meta-value">{{ meta.value }}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="release-actions">
-              <a href="#" class="md3-btn md3-btn-filled action-btn">
-                <span class="material-symbols-outlined" style="font-size: 20px;">download</span>
-                {{ t('download.downloadRom') }}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Changelog Section -->
     <section class="changelog-section">
       <div class="wrapper">
@@ -192,11 +133,6 @@ onMounted(() => {
   }
 })
 
-const releaseMeta = computed(() => [
-  { icon: 'calendar_month', label: t('download.releaseDate'), value: 'February 15, 2026' },
-  { icon: 'tag', label: t('download.version'), value: 'v16.2.1-stable' },
-])
-
 const changelog = [
   {
     version: 'v16.2.1',
@@ -328,83 +264,8 @@ function openFullChangelog(log) {
   font-size: 16px;
 }
 
-/* ── Hero ── */
-.page-hero {
-  padding: 4rem 0 2rem;
-}
-.page-hero-content { 
-  max-width: 800px; 
-  margin: 0 auto;
-  text-align: center; 
-}
-.page-hero-content .md3-chip { margin-bottom: 1.5rem; }
-.page-hero-content h1 { margin-bottom: 0; }
-
-/* ── Release Section ── */
-.release-section { padding: 1rem 0; }
-.release-hero { max-width: 780px; margin: 0 auto; }
-.release-card { padding: 2rem; }
-
-.release-card-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.release-icon {
-  width: 56px; height: 56px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--color-tertiary) 0%, var(--color-primary) 100%);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.release-icon .material-symbols-outlined { color: #fff; }
-
-.release-info { width: 100%; }
-.release-info h2 { color: var(--color-text-one); font-size: 1.5rem; margin-bottom: 0.4rem; }
-.release-info p { font-size: 0.85rem; color: var(--color-text-four); max-width: 480px; margin: 0 auto; }
-
-.release-badges {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-  justify-content: center;
-}
-
-.release-meta {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.65rem;
-  margin-bottom: 1.5rem;
-}
-
-.meta-item {
-  display: flex; align-items: center; gap: 0.65rem;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  background-color: var(--color-surface-eight);
-  transition: background-color 0.2s ease;
-}
-.meta-item:hover { background-color: var(--color-surface-nine); }
-
-.meta-icon { color: var(--color-primary); flex-shrink: 0; }
-.meta-label { font-size: 0.65rem; color: var(--color-text-four); display: block; text-transform: uppercase; letter-spacing: 0.05em; }
-.meta-value { font-size: 0.85rem; font-weight: 600; color: var(--color-text-one); display: block; margin-top: 1px; }
-
-.release-actions {
-  display: flex;
-  gap: 0.65rem;
-}
-.action-btn {
-  flex: 1;
-  justify-content: center;
-  padding: 12px 20px !important;
-  font-size: 0.9rem !important;
-}
-
 /* ── Changelog Accordion ── */
-.changelog-section { padding: 2rem 0 4rem; }
+.changelog-section { padding: 3rem 0 4rem; }
 .section-title { font-size: 1.8rem; color: var(--color-text-one); margin-bottom: 2.5rem; text-align: center; }
 
 .changelog-accordion {
@@ -582,12 +443,6 @@ function openFullChangelog(log) {
 
 @media (max-width: 768px) {
 
-  .page-hero { padding: 3rem 0 2rem; }
-
-  .release-card { padding: 2rem 1.5rem; }
-
-  .release-meta { grid-template-columns: repeat(2, 1fr); }
-
   .panel-header { padding: 1rem 1.25rem; }
 
   .panel-icon { width: 38px; height: 38px; }
@@ -599,14 +454,6 @@ function openFullChangelog(log) {
 
 
 @media (max-width: 480px) {
-
-  .page-hero-content h1 { font-size: 2.2rem; }
-
-  .release-meta { grid-template-columns: 1fr; }
-
-  .release-actions { flex-direction: column; }
-
-  .action-btn { width: 100%; }
 
 }
 
