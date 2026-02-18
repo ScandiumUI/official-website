@@ -127,7 +127,6 @@ const navLinks = computed(() => [
   { name: t('nav.home'), to: '/' },
   { name: t('nav.wiki'), to: '/wiki' },
   { name: t('nav.download'), to: '/download' },
-  { name: t('nav.contributors'), to: '/contributors' },
   { name: t('nav.about'), to: '/about' },
 ])
 
@@ -460,7 +459,7 @@ onUnmounted(() => {
 }
 
 .sidebar-buttons .nav-btn a {
-  justify-content: flex-start;
+  justify-content: center;
   padding: 0.75rem 1.25rem;
 }
 
