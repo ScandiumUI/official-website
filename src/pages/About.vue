@@ -4,12 +4,26 @@
     <section class="page-hero">
       <div class="wrapper">
         <div class="page-hero-content animate-fade-up">
-          <div class="md3-chip">
-            <span class="material-symbols-outlined filled" style="font-size: 16px;">info</span>
-            {{ t('about.chip') }}
-          </div>
           <h1>{{ t('about.title') }}</h1>
           <p>{{ t('about.desc') }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values (Mission/Vision) -->
+    <section class="values-section">
+      <div class="wrapper">
+        <div class="values-grid">
+          <div class="value-card md3-card-elevated animate-fade-up delay-100">
+            <span class="material-symbols-outlined filled value-icon">flag</span>
+            <h3>{{ t('about.missionTitle') }}</h3>
+            <p>{{ t('about.missionDesc') }}</p>
+          </div>
+          <div class="value-card md3-card-elevated animate-fade-up delay-200">
+            <span class="material-symbols-outlined filled value-icon">visibility</span>
+            <h3>{{ t('about.visionTitle') }}</h3>
+            <p>{{ t('about.visionDesc') }}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -23,42 +37,25 @@
             <p>{{ t('about.storyP1') }}</p>
             <p>{{ t('about.storyP2') }}</p>
           </div>
-          <div class="story-visual md3-card-elevated">
+          <div class="story-visual">
             <div class="story-icon-grid">
-              <div class="story-icon-item">
+              <div class="story-icon-item md3-card animate-fade-up delay-100">
                 <span class="material-symbols-outlined filled" style="font-size: 32px; color: var(--color-primary);">palette</span>
                 <span>{{ t('about.storyMaterialYou') }}</span>
               </div>
-              <div class="story-icon-item">
+              <div class="story-icon-item md3-card animate-fade-up delay-200">
                 <span class="material-symbols-outlined filled" style="font-size: 32px; color: var(--color-primary);">speed</span>
                 <span>{{ t('about.storyPerformance') }}</span>
               </div>
-              <div class="story-icon-item">
+              <div class="story-icon-item md3-card animate-fade-up delay-300">
                 <span class="material-symbols-outlined filled" style="font-size: 32px; color: var(--color-primary);">lock</span>
                 <span>{{ t('about.storyPrivacy') }}</span>
               </div>
-              <div class="story-icon-item">
+              <div class="story-icon-item md3-card animate-fade-up delay-400">
                 <span class="material-symbols-outlined filled" style="font-size: 32px; color: var(--color-primary);">code</span>
                 <span>{{ t('about.storyOpenSource') }}</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="values-section">
-      <div class="wrapper">
-        <div class="values-grid">
-          <div class="value-card md3-card-elevated animate-fade-up delay-100">
-            <span class="material-symbols-outlined filled value-icon">flag</span>
-            <h3>{{ t('about.missionTitle') }}</h3>
-            <p>{{ t('about.missionDesc') }}</p>
-          </div>
-          <div class="value-card md3-card-elevated animate-fade-up delay-200">
-            <span class="material-symbols-outlined filled value-icon">visibility</span>
-            <h3>{{ t('about.visionTitle') }}</h3>
-            <p>{{ t('about.visionDesc') }}</p>
           </div>
         </div>
       </div>
@@ -100,10 +97,13 @@
 
     <section class="stats-section">
       <div class="wrapper">
-        <div class="stats-grid">
-          <div v-for="stat in stats" :key="stat.value" class="stat-item animate-fade-up">
-            <span class="stat-number gradient-text">{{ stat.value }}</span>
-            <span class="stat-label">{{ stat.label }}</span>
+        <div class="stats-cards">
+          <div v-for="stat in stats" :key="stat.value" class="stat-card md3-card-outlined animate-fade-up">
+            <div class="stat-card-header">
+              <span class="material-symbols-outlined filled stat-card-icon">{{ stat.icon }}</span>
+              <span class="stat-card-value gradient-text">{{ stat.value }}</span>
+            </div>
+            <span class="stat-card-label">{{ stat.label }}</span>
           </div>
         </div>
       </div>
@@ -180,17 +180,14 @@ const techStack = computed(() => [
 ])
 
 const timeline = computed(() => [
-  { date: t('about.timeline1Date'), title: t('about.timeline1Title'), desc: t('about.timeline1Desc') },
-  { date: t('about.timeline2Date'), title: t('about.timeline2Title'), desc: t('about.timeline2Desc') },
-  { date: t('about.timeline3Date'), title: t('about.timeline3Title'), desc: t('about.timeline3Desc') },
   { date: t('about.timeline4Date'), title: t('about.timeline4Title'), desc: t('about.timeline4Desc') },
 ])
 
 const stats = computed(() => [
-  { value: '2', label: t('about.statMembers') },
-  { value: '10+', label: t('about.statContributors') },
-  { value: '200+', label: t('about.statCommits') },
-  { value: '1', label: t('about.statReleases') },
+  { value: '2', label: t('about.statMembers'), icon: 'groups' },
+  { value: '10+', label: t('about.statContributors'), icon: 'person_add' },
+  { value: '200+', label: t('about.statCommits'), icon: 'history' },
+  { value: '1', label: t('about.statReleases'), icon: 'verified' },
 ])
 </script>
 
@@ -201,18 +198,24 @@ const stats = computed(() => [
   border-bottom: 1px solid var(--color-border);
 }
 
-.page-hero-content { max-width: 640px; }
+.page-hero-content { 
+  max-width: 800px; 
+  margin: 0 auto;
+  text-align: center;
+}
 .page-hero-content .md3-chip { margin-bottom: 1.5rem; }
 .page-hero-content h1 { margin-bottom: 0.75rem; }
 
 /* === STORY === */
-.story-section { padding: 3rem 0; }
+.story-section { padding: 3rem 0; text-align: center; }
 
 .story-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .story-text h2 {
@@ -224,13 +227,14 @@ const stats = computed(() => [
 .story-text p {
   line-height: 1.8;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
-.story-visual { padding: 2rem; }
+.story-visual { padding: 2rem; width: 100%; }
 
 .story-icon-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
@@ -238,16 +242,24 @@ const stats = computed(() => [
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  border-radius: 12px;
-  background-color: var(--color-surface-eight);
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  border-radius: 20px;
+  background-color: var(--color-surface-one);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+.story-icon-item:hover {
+  background-color: var(--color-surface-two);
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
 }
 
 .story-icon-item span:last-child {
-  font-size: 0.8rem;
-  color: var(--color-text-four);
-  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--color-text-one);
+  font-weight: 600;
 }
 
 /* === VALUES === */
@@ -255,35 +267,60 @@ const stats = computed(() => [
 
 .values-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .value-card {
-  padding: 2.5rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-surface-one);
+  border: 1px solid var(--color-border);
+  border-radius: 28px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.value-card:hover {
+  background-color: var(--color-surface-two);
+  border-color: var(--color-primary);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
 .value-icon {
-  font-size: 36px;
+  font-size: 44px;
   color: var(--color-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .value-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--color-text-one);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.value-card p { line-height: 1.7; }
+.value-card p { 
+  font-size: 1rem;
+  line-height: 1.7; 
+  text-align: center; 
+  color: var(--color-text-four);
+  max-width: 400px;
+}
 
 /* === TECH STACK === */
-.stack-section { padding: 3rem 0; }
+.stack-section { padding: 3rem 0; text-align: center; }
 
 .section-title {
   font-size: 1.75rem;
   color: var(--color-text-one);
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .stack-grid {
@@ -294,26 +331,31 @@ const stats = computed(() => [
 
 .stack-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 1.25rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
 }
 
-.stack-icon { font-size: 28px; color: var(--color-primary); flex-shrink: 0; }
-.stack-info h4 { font-size: 0.95rem; color: var(--color-text-one); margin-bottom: 0.1rem; }
-.stack-info span { font-size: 0.8rem; color: var(--color-text-four); }
+.stack-icon { font-size: 32px; color: var(--color-primary); flex-shrink: 0; }
+.stack-info h4 { font-size: 0.95rem; color: var(--color-text-one); margin-bottom: 0.25rem; }
+.stack-info span { font-size: 0.75rem; color: var(--color-text-four); line-height: 1.4; display: block; }
 
 /* === TIMELINE === */
-.timeline-section { padding: 3rem 0; }
+.timeline-section { padding: 3rem 0; text-align: center; }
 
 .timeline {
   display: flex;
   flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .timeline-item {
   display: flex;
   gap: 1.5rem;
+  text-align: left;
 }
 
 .timeline-marker {
@@ -341,51 +383,86 @@ const stats = computed(() => [
 .timeline-content {
   flex: 1;
   margin-bottom: 1.5rem;
+  position: relative;
+  padding: 1.5rem;
 }
 
 .timeline-date {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-primary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
 }
 
 .timeline-content h4 {
   font-size: 1.05rem;
   color: var(--color-text-one);
-  margin: 0.25rem 0 0.5rem;
+  margin: 0 0 0.5rem;
+  text-align: left;
 }
 
 .timeline-content p {
   font-size: 0.9rem;
   line-height: 1.6;
+  text-align: left;
 }
 
 /* === STATS === */
-.stats-section { padding: 3rem 0; }
+.stats-section { padding: 4rem 0; }
 
-.stats-grid {
+.stats-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  text-align: center;
-  padding: 2.5rem;
+  gap: 1.25rem;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  background-color: var(--color-surface-one);
   border-radius: 20px;
-  background-color: var(--color-surface-nine);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
 }
 
-.stat-number {
-  font-size: 2.5rem;
+.stat-card:hover {
+  background-color: var(--color-surface-two);
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.stat-card-icon {
+  font-size: 24px;
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+.stat-card-value {
+  font-size: 1.75rem;
   font-weight: 800;
-  display: block;
-  margin-bottom: 0.25rem;
 }
 
-.stat-label {
+.stat-card-label {
   font-size: 0.85rem;
+  font-weight: 600;
   color: var(--color-text-four);
-  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* === FOUNDERS === */
@@ -491,8 +568,10 @@ const stats = computed(() => [
 @media (max-width: 768px) {
   .page-hero { padding: 3rem 0 2rem; }
   .story-layout { grid-template-columns: 1fr; }
+  .story-icon-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   .values-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stack-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .stats-cards { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   .contact-links { grid-template-columns: 1fr; }
   .timeline-marker { display: none; }
   .timeline-item { gap: 0; }
