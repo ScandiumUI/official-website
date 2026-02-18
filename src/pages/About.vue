@@ -95,6 +95,12 @@
       </div>
     </section>
 
+    <section class="team-title-section">
+      <div class="wrapper">
+        <h2 class="section-title animate-fade-up" data-reveal>{{ t('about.teamTitle') }}</h2>
+      </div>
+    </section>
+
     <section class="stats-section">
       <div class="wrapper">
         <div class="stats-cards">
@@ -105,6 +111,17 @@
             </div>
             <span class="stat-card-label">{{ stat.label }}</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-cta-section">
+      <div class="wrapper">
+        <div class="team-cta-box animate-fade-up" data-reveal>
+          <router-link to="/contributors" class="md3-btn md3-btn-tonal">
+            <span class="material-symbols-outlined">group</span>
+            {{ t('about.seeAllTeam') }}
+          </router-link>
         </div>
       </div>
     </section>
@@ -190,6 +207,8 @@ const stats = computed(() => [
   { value: '10+', label: t('about.statContributors'), icon: 'person_add' },
   { value: '200+', label: t('about.statCommits'), icon: 'history' },
   { value: '1', label: t('about.statReleases'), icon: 'verified' },
+  { value: '5+', label: t('about.statDevices'), icon: 'smartphone' },
+  { value: '100+', label: t('about.statFollowers'), icon: 'star' },
 ])
 </script>
 
@@ -414,11 +433,11 @@ const stats = computed(() => [
 }
 
 /* === STATS === */
-.stats-section { padding: 4rem 0; }
+.stats-section { padding: 1rem 0 2rem; }
 
 .stats-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.25rem;
 }
 
@@ -466,6 +485,10 @@ const stats = computed(() => [
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+/* === TEAM TITLE === */
+.team-title-section { padding: 3rem 0 0.5rem; }
+.team-title-section .section-title { margin-bottom: 0.5rem; }
 
 /* === FOUNDERS === */
 .founders-section { padding: 3rem 0; }
@@ -530,6 +553,10 @@ const stats = computed(() => [
 }
 
 .founder-social-link:hover { opacity: 0.7; }
+
+/* === TEAM CTA === */
+.team-cta-section { padding: 0 0 3rem; }
+.team-cta-box { display: flex; justify-content: center; margin-top: 1.0rem; }
 
 /* === CONTACT === */
 .contact-section { padding: 2rem 0 5rem; }
