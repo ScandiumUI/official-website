@@ -3,9 +3,7 @@
     <section class="page-hero">
       <div class="wrapper">
         <div class="page-hero-content animate-fade-up">
-          <h1>
-            {{ displayedTitle }}<span class="typing-cursor">|</span>
-          </h1>
+          <h1>{{ t('wiki.title') }}</h1>
           <p>{{ t('wiki.desc') }}</p>
         </div>
       </div>
@@ -125,24 +123,6 @@ import { useI18n } from '../i18n/index.js'
 
 const { t } = useI18n()
 
-const displayedTitle = ref('')
-const fullTitle = computed(() => t('wiki.title'))
-let typingInterval = null
-
-const startTyping = () => {
-  let i = 0
-  displayedTitle.value = ''
-  clearInterval(typingInterval)
-  typingInterval = setInterval(() => {
-    if (i < fullTitle.value.length) {
-      displayedTitle.value += fullTitle.value.charAt(i)
-      i++
-    } else {
-      clearInterval(typingInterval)
-    }
-  }, 100)
-}
-
 const activeSection = ref('getting-started')
 
 const sections = computed(() => [
@@ -212,11 +192,9 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
-  startTyping()
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  clearInterval(typingInterval)
 })
 </script>
 
@@ -224,7 +202,6 @@ onUnmounted(() => {
 .page-hero {
   padding: 6rem 0 4rem;
   border-bottom: 1px solid var(--color-border);
-  background: radial-gradient(circle at 50% -20%, var(--color-tertiary) 0%, transparent 70%);
 }
 
 .page-hero-content {
@@ -238,17 +215,6 @@ onUnmounted(() => {
   font-weight: 800;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
-}
-
-.typing-cursor {
-  color: var(--color-primary);
-  animation: blink 0.8s infinite;
-  margin-left: 2px;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
 }
 
 .page-hero-content p {
