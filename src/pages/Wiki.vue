@@ -3,11 +3,9 @@
     <section class="page-hero">
       <div class="wrapper">
         <div class="page-hero-content animate-fade-up">
-          <div class="md3-chip">
-            <span class="material-symbols-outlined filled" style="font-size: 16px;">menu_book</span>
-            {{ t('wiki.chip') }}
-          </div>
-          <h1>{{ t('wiki.title') }}</h1>
+          <h1>
+            {{ displayedTitle }}<span class="typing-cursor">|</span>
+          </h1>
           <p>{{ t('wiki.desc') }}</p>
         </div>
       </div>
@@ -28,52 +26,69 @@
             </nav>
           </aside>
           <div class="wiki-main">
-            <article id="getting-started" class="wiki-section animate-fade-up">
+            <article id="getting-started" class="wiki-section animate-fade-up centered-header">
               <h2>{{ t('wiki.gettingStarted') }}</h2>
               <p>{{ t('wiki.gettingStartedDesc') }}</p>
 
-              <div class="requirements-grid">
-                <div v-for="req in requirements" :key="req.icon" class="req-card md3-card-outlined">
-                  <span class="material-symbols-outlined filled req-icon">{{ req.icon }}</span>
-                  <h3>{{ req.title }}</h3>
-                  <p>{{ req.desc }}</p>
+              <div class="requirements-list">
+                <div v-for="req in requirements" :key="req.icon" class="req-item md3-card-outlined">
+                  <div class="req-icon-box">
+                    <span class="material-symbols-outlined filled">{{ req.icon }}</span>
+                  </div>
+                  <div class="req-content">
+                    <h3>{{ req.title }}</h3>
+                    <p>{{ req.desc }}</p>
+                  </div>
                 </div>
               </div>
             </article>
-            <article id="installation" class="wiki-section animate-fade-up">
+            <article id="installation" class="wiki-section animate-fade-up centered-header">
               <h2>{{ t('wiki.installTitle') }}</h2>
               <p>{{ t('wiki.installDesc') }}</p>
 
-              <div class="steps-list">
-                <div v-for="(step, i) in steps" :key="i" class="step-item">
-                  <div class="step-number">{{ i + 1 }}</div>
-                  <div class="step-content">
-                    <h3>{{ step.title }}</h3>
-                    <p>{{ step.desc }}</p>
-                    <div v-if="step.command" class="code-block">
-                      <code>{{ step.command }}</code>
+              <div class="steps-grid-expand">
+                <details v-for="(step, i) in steps" :key="i" class="step-expand-item">
+                  <summary>
+                    <div class="step-item-flex">
+                      <div class="step-number-box">
+                        <span class="step-num">{{ i + 1 }}</span>
+                      </div>
+                      <div class="step-text-side">
+                        <h3>{{ step.title }}</h3>
+                        <p>{{ step.desc }}</p>
+                        <div v-if="step.command" class="code-block">
+                          <code>{{ step.command }}</code>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </summary>
+                </details>
               </div>
             </article>
-            <article id="features" class="wiki-section animate-fade-up">
+            <article id="features" class="wiki-section animate-fade-up centered-header">
               <h2>{{ t('wiki.featuresTitle') }}</h2>
               <p>{{ t('wiki.featuresDesc') }}</p>
 
-              <div class="feature-list">
-                <div v-for="feat in wikiFeatures" :key="feat.icon" class="feature-row">
-                  <div class="feature-row-icon">
-                    <span class="material-symbols-outlined filled">{{ feat.icon }}</span>
-                  </div>
-                  <div class="feature-row-text">
-                    <h3>{{ feat.title }}</h3>
-                    <p>{{ feat.desc }}</p>
-                  </div>
-                </div>
+              <div class="feature-grid-expand">
+                <details v-for="feat in wikiFeatures" :key="feat.icon" class="feature-expand-item">
+                  <summary>
+                    <div class="feature-item-flex md3-card-outlined">
+                      <div class="feature-icon-column">
+                        <div class="feature-icon-only">
+                          <span class="material-symbols-outlined filled">{{ feat.icon }}</span>
+                        </div>
+                        <span class="feature-mini-title">{{ feat.title }}</span>
+                      </div>
+                      <div class="feature-text-side">
+                        <h3>{{ feat.title }}</h3>
+                        <p>{{ feat.desc }}</p>
+                      </div>
+                    </div>
+                  </summary>
+                </details>
               </div>
             </article>
-            <article id="faq" class="wiki-section animate-fade-up">
+            <article id="faq" class="wiki-section animate-fade-up centered-header">
               <h2>{{ t('wiki.faqTitle') }}</h2>
               <div class="faq-list">
                 <details v-for="(faq, i) in faqs" :key="i" class="faq-item md3-card-outlined">
@@ -85,7 +100,7 @@
                 </details>
               </div>
             </article>
-            <article id="troubleshooting" class="wiki-section animate-fade-up">
+            <article id="troubleshooting" class="wiki-section animate-fade-up centered-header">
               <h2>{{ t('wiki.troubleTitle') }}</h2>
               <div class="trouble-grid">
                 <div v-for="(item, i) in troubleshoot" :key="i" class="trouble-card md3-card">
@@ -109,6 +124,24 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from '../i18n/index.js'
 
 const { t } = useI18n()
+
+const displayedTitle = ref('')
+const fullTitle = computed(() => t('wiki.title'))
+let typingInterval = null
+
+const startTyping = () => {
+  let i = 0
+  displayedTitle.value = ''
+  clearInterval(typingInterval)
+  typingInterval = setInterval(() => {
+    if (i < fullTitle.value.length) {
+      displayedTitle.value += fullTitle.value.charAt(i)
+      i++
+    } else {
+      clearInterval(typingInterval)
+    }
+  }, 100)
+}
 
 const activeSection = ref('getting-started')
 
@@ -177,22 +210,54 @@ const handleScroll = () => {
   }
 }
 
-onMounted(() => window.addEventListener('scroll', handleScroll, { passive: true }))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  startTyping()
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  clearInterval(typingInterval)
+})
 </script>
 
 <style scoped>
 .page-hero {
-  padding: 4rem 0 3rem;
+  padding: 6rem 0 4rem;
   border-bottom: 1px solid var(--color-border);
+  background: radial-gradient(circle at 50% -20%, var(--color-tertiary) 0%, transparent 70%);
 }
 
 .page-hero-content {
-  max-width: 600px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.page-hero-content .md3-chip { margin-bottom: 1.5rem; }
-.page-hero-content h1 { margin-bottom: 0.75rem; }
+.page-hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.typing-cursor {
+  color: var(--color-primary);
+  animation: blink 0.8s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.page-hero-content p {
+  font-size: 1.1rem;
+  color: var(--color-text-four);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 .wiki-content { padding: 3rem 0 5rem; }
 
 .wiki-layout {
@@ -240,50 +305,189 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 .toc-link.active { color: var(--color-primary); border-left-color: var(--color-primary); background-color: var(--color-tertiary); }
 .wiki-section { margin-bottom: 4rem; }
 .wiki-section h2 { color: var(--color-text-one); font-size: 1.75rem; margin-bottom: 1rem; }
+.wiki-section.centered-header h2 { text-align: center; margin-bottom: 0.25rem; }
+#faq.centered-header h2, #troubleshooting.centered-header h2 { margin-bottom: 1rem; }
+.wiki-section.centered-header > p { text-align: center; margin-bottom: 1.5rem; }
+#faq.centered-header > p, #troubleshooting.centered-header > p { margin-bottom: 2.5rem; }
 .wiki-section > p { margin-bottom: 2rem; }
-.requirements-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.requirements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.req-item {
+  display: flex;
+  align-items: center;
   gap: 1rem;
+  padding: 1rem;
+  background-color: var(--color-surface-one);
+  border-radius: 20px;
+  transition: all 0.3s ease;
 }
 
-.req-card {
+.req-item:hover {
+  background-color: var(--color-surface-two);
+  border-color: var(--color-primary);
+}
+
+.req-icon-box {
+  width: 44px; height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background-color: var(--color-tertiary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.req-icon-box .material-symbols-outlined {
+  font-size: 22px;
+  color: var(--color-primary);
+}
+
+.req-content h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-one);
+  margin-bottom: 0.15rem !important;
+  text-align: left;
+}
+
+.req-content p {
+  font-size: 0.85rem;
+  color: var(--color-text-four);
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .req-item {
+    padding: 0.875rem;
+  }
+}
+
+.steps-grid-expand {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.step-expand-item {
+  display: block;
+  width: 100%;
+}
+
+.step-expand-item summary {
+  list-style: none;
+  cursor: pointer;
+  outline: none;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.step-expand-item summary::-webkit-details-marker { display: none; }
+
+.step-item-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.25rem 0.75rem;
+  background-color: var(--color-surface-one);
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 80px;
+}
+
+.step-expand-item:hover .step-item-flex {
+  background-color: var(--color-surface-two);
+  border-color: var(--color-primary);
+}
+
+.step-expand-item[open] {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.step-expand-item[open] .step-item-flex {
+  justify-content: flex-start;
+  background-color: var(--color-surface-one);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
-}
-
-.req-icon { font-size: 24px; color: var(--color-primary); }
-.req-card h3 { font-size: 1rem; color: var(--color-text-one); }
-.req-card p { font-size: 0.875rem; }
-
-.steps-list {
+  margin: 0.25rem 0;
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  animation: cardExpand 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.step-item {
-  display: flex;
-  gap: 1.25rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.step-item:last-child { border-bottom: none; }
-
-.step-number {
-  width: 36px; height: 36px; min-width: 36px;
+.step-number-box {
+  width: 48px; height: 48px;
+  min-width: 48px;
   border-radius: 50%;
   background-color: var(--color-tertiary);
-  color: var(--color-primary);
-  font-weight: 700; font-size: 0.9rem;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
-.step-content h3 { font-size: 1rem; color: var(--color-text-one); margin-bottom: 0.25rem; }
-.step-content p { font-size: 0.9rem; }
+.step-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.step-expand-item[open] .step-number-box {
+  background-color: var(--color-primary);
+}
+
+.step-expand-item[open] .step-num {
+  color: white;
+}
+
+.step-text-side {
+  display: none;
+  overflow: hidden;
+  opacity: 0;
+  text-align: left;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step-expand-item[open] .step-text-side {
+  display: flex;
+  max-width: 1000px;
+  opacity: 1;
+  padding-left: 1.5rem;
+}
+
+.step-text-side h3 { 
+  font-size: 1.1rem; 
+  font-weight: 700;
+  color: var(--color-text-one); 
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.step-text-side p { 
+  font-size: 0.9rem; 
+  line-height: 1.5; 
+  color: var(--color-text-four); 
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .steps-grid-expand {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 .code-block {
   margin-top: 0.75rem;
@@ -300,32 +504,187 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
   color: var(--color-primary);
 }
 
-.feature-list {
+.feature-grid-expand {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.feature-expand-item {
+  display: block;
+  width: 100%;
+}
+
+.feature-expand-item[open] {
+  grid-column: 1 / -1;
+}
+
+.feature-expand-item summary {
+  list-style: none;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.feature-expand-item summary::-webkit-details-marker { display: none; }
+
+.feature-item-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.25rem 0.75rem;
+  background-color: var(--color-surface-one);
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 120px;
+}
+
+.feature-expand-item:hover .feature-item-flex {
+  background-color: var(--color-surface-two);
+}
+
+.feature-expand-item[open] {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.feature-expand-item[open] .feature-item-flex {
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  background-color: var(--color-surface-one);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transform: none;
+  padding: 1.25rem;
+  margin: 0.25rem 0;
+  display: flex;
+  min-height: 80px;
+  animation: cardExpand 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardExpand {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px) scale(0.98);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  }
+}
+
+.feature-icon-column {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.feature-expand-item[open] .feature-icon-column {
   gap: 0;
 }
 
-.feature-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--color-border);
+.feature-expand-item[open] .feature-mini-title {
+  display: none;
 }
 
-.feature-row:last-child { border-bottom: none; }
+.feature-mini-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-one);
+  text-align: center;
+  max-width: 100px;
+  line-height: 1.3;
+}
 
-.feature-row-icon {
-  width: 40px; height: 40px; min-width: 40px;
-  border-radius: 12px;
+.feature-icon-only {
+  width: 52px; height: 52px;
+  min-width: 52px;
+  border-radius: 14px;
+  background-color: var(--color-surface-three);
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.feature-expand-item:hover .feature-icon-only {
   background-color: var(--color-tertiary);
-  display: flex; align-items: center; justify-content: center;
 }
 
-.feature-row-icon .material-symbols-outlined { font-size: 20px; color: var(--color-primary); }
-.feature-row-text h3 { font-size: 1rem; color: var(--color-text-one); margin-bottom: 0.25rem; }
-.feature-row-text p { font-size: 0.9rem; line-height: 1.6; }
+.feature-expand-item[open] .feature-icon-only {
+  width: 56px; height: 56px;
+  min-width: 56px;
+  background-color: var(--color-primary);
+  border-radius: 16px;
+  transform: scale(1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon-only .material-symbols-outlined { 
+  font-size: 24px; 
+  color: var(--color-primary); 
+  transition: all 0.3s ease;
+}
+
+.feature-expand-item[open] .feature-icon-only .material-symbols-outlined {
+  font-size: 28px;
+  color: white;
+  transform: scale(1);
+}
+
+.feature-text-side {
+  display: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.feature-expand-item[open] .feature-text-side {
+  display: flex;
+  max-width: 1000px;
+  opacity: 1;
+  padding-left: 1.25rem;
+}
+
+.feature-text-side h3 { 
+  font-size: 1rem; 
+  font-weight: 600;
+  color: var(--color-text-one); 
+  margin: 0 0 2px 0; 
+  white-space: nowrap; 
+}
+
+.feature-text-side p { 
+  font-size: 0.875rem; 
+  line-height: 1.4; 
+  color: var(--color-text-four); 
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .feature-grid-expand {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .feature-text-side h3 {
+    white-space: normal;
+  }
+}
 
 /* FAQ */
 .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -388,7 +747,6 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 @media (max-width: 768px) {
   .page-hero { padding: 3rem 0 2rem; }
   .wiki-content { padding: 2rem 0 3rem; }
-  .requirements-grid { grid-template-columns: 1fr; }
   .trouble-grid { grid-template-columns: 1fr; }
 }
 
