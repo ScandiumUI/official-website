@@ -4,10 +4,6 @@
     <section class="page-hero">
       <div class="wrapper">
         <div class="page-hero-content animate-fade-up">
-          <div class="md3-chip">
-            <span class="material-symbols-outlined filled" style="font-size: 16px;">new_releases</span>
-            {{ t('download.chip') }}
-          </div>
           <h1>{{ t('download.title') }}</h1>
           <p>{{ t('download.desc') }}</p>
         </div>
@@ -19,7 +15,6 @@
       <div class="wrapper">
         <div class="release-hero animate-fade-up">
           <div class="release-card md3-card-elevated">
-            <!-- Header row -->
             <div class="release-card-header">
               <div class="release-icon">
                 <span class="material-symbols-outlined filled" style="font-size: 36px;">android</span>
@@ -44,7 +39,6 @@
               </div>
             </div>
 
-            <!-- Meta grid -->
             <div class="release-meta">
               <div v-for="meta in releaseMeta" :key="meta.icon" class="meta-item">
                 <span class="material-symbols-outlined meta-icon" style="font-size: 20px;">{{ meta.icon }}</span>
@@ -55,7 +49,6 @@
               </div>
             </div>
 
-            <!-- Action buttons — side by side -->
             <div class="release-actions">
               <a href="#" class="md3-btn md3-btn-filled action-btn">
                 <span class="material-symbols-outlined" style="font-size: 20px;">download</span>
@@ -71,54 +64,57 @@
       </div>
     </section>
 
-    <!-- Changelog Timeline -->
+    <!-- Changelog Section -->
     <section class="changelog-section">
       <div class="wrapper">
         <h2 class="section-title animate-fade-up">{{ t('download.changelogTitle') }}</h2>
-        <div class="changelog-timeline">
-          <div
-            v-for="(log, i) in changelog"
-            :key="log.version"
-            class="changelog-item animate-fade-up"
-            :class="['delay-' + (i + 1) + '00', { 'is-latest': i === 0 }]"
+        
+        <div class="changelog-accordion">
+          <details 
+            v-for="(log, i) in changelog" 
+            :key="log.version" 
+            class="changelog-panel animate-fade-up"
+            :class="'delay-' + (i + 1) + '00'"
+            :open="i === 0"
           >
-            <!-- Timeline rail -->
-            <div class="changelog-rail">
-              <div class="rail-dot" :class="{ latest: i === 0 }">
-                <span v-if="i === 0" class="material-symbols-outlined" style="font-size: 14px;">star</span>
-              </div>
-              <div v-if="i < changelog.length - 1" class="rail-line"></div>
-            </div>
-            <!-- Content card -->
-            <div class="changelog-card" :class="{ 'md3-card-elevated': i === 0, 'md3-card-outlined': i !== 0 }">
-              <div class="changelog-head">
-                <div class="changelog-title-row">
-                  <div class="changelog-icon-wrap" :class="getUpdateColor(i)">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">{{ getUpdateIcon(i) }}</span>
+            <summary class="panel-header md3-card-outlined">
+              <div class="panel-header-main">
+                <div class="panel-icon" :class="getUpdateColor(i)">
+                  <span class="material-symbols-outlined">{{ getUpdateIcon(i) }}</span>
+                </div>
+                <div class="panel-info">
+                  <div class="panel-title">
+                    <h3>ScandiumOS {{ log.version }}</h3>
+                    <span v-if="i === 0" class="latest-tag">{{ t('download.latest') }}</span>
                   </div>
-                  <div>
-                    <h3>{{ log.version }}</h3>
-                    <span class="changelog-type">{{ log.type }}</span>
+                  <div class="panel-meta">
+                    <span class="meta-date">{{ log.date }}</span>
+                    <span class="meta-sep">•</span>
+                    <span class="meta-type">{{ log.type }}</span>
                   </div>
                 </div>
-                <div class="changelog-right">
-                  <span v-if="i === 0" class="latest-badge">{{ t('download.latest') }}</span>
-                  <span class="changelog-date">{{ log.date }}</span>
-                </div>
               </div>
-              <ul class="changelog-list">
-                <li v-for="change in log.changes" :key="change">
-                  <span class="change-dot" :class="getUpdateColor(i)"></span>
-                  {{ change }}
-                </li>
-              </ul>
+              <div class="panel-chevron">
+                <span class="material-symbols-outlined">expand_more</span>
+              </div>
+            </summary>
+            
+            <div class="panel-content">
+              <div class="content-inner">
+                <ul class="panel-list">
+                  <li v-for="change in log.changes" :key="change">
+                    <span class="material-symbols-outlined">circle</span>
+                    <p>{{ change }}</p>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          </details>
         </div>
       </div>
     </section>
 
-    <!-- Additional Downloads — horizontal cards side by side -->
+    <!-- Additional Downloads -->
     <section class="extras-section">
       <div class="wrapper">
         <h2 class="section-title animate-fade-up">{{ t('download.additionalTitle') }}</h2>
@@ -233,161 +229,240 @@ function getUpdateColor(index) {
   padding: 4rem 0 3rem;
   border-bottom: 1px solid var(--color-border);
 }
-.page-hero-content { max-width: 600px; }
+.page-hero-content { 
+  max-width: 800px; 
+  margin: 0 auto;
+  text-align: center; 
+}
 .page-hero-content .md3-chip { margin-bottom: 1.5rem; }
 .page-hero-content h1 { margin-bottom: 0.75rem; }
 
 /* ── Release Section ── */
-.release-section { padding: 3rem 0; }
+.release-section { padding: 2.5rem 0; }
 .release-hero { max-width: 780px; margin: 0 auto; }
-.release-card { padding: 2.5rem; }
+.release-card { padding: 2rem; }
 
 .release-card-header {
   display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .release-icon {
-  width: 64px; height: 64px;
-  border-radius: 18px;
+  width: 56px; height: 56px;
+  border-radius: 16px;
   background: linear-gradient(135deg, var(--color-tertiary) 0%, var(--color-primary) 100%);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
 .release-icon .material-symbols-outlined { color: #fff; }
 
-.release-info { flex: 1; min-width: 180px; }
-.release-info h2 { color: var(--color-text-one); font-size: 1.6rem; margin-bottom: 0.25rem; }
-.release-info p { font-size: 0.9rem; color: var(--color-text-four); }
+.release-info { width: 100%; }
+.release-info h2 { color: var(--color-text-one); font-size: 1.5rem; margin-bottom: 0.4rem; }
+.release-info p { font-size: 0.85rem; color: var(--color-text-four); max-width: 480px; margin: 0 auto; }
 
 .release-badges {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-  align-self: center;
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  justify-content: center;
 }
 
 .release-meta {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
 }
 
 .meta-item {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 1rem;
-  border-radius: 14px;
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
   background-color: var(--color-surface-eight);
   transition: background-color 0.2s ease;
 }
 .meta-item:hover { background-color: var(--color-surface-nine); }
 
 .meta-icon { color: var(--color-primary); flex-shrink: 0; }
-.meta-label { font-size: 0.7rem; color: var(--color-text-four); display: block; text-transform: uppercase; letter-spacing: 0.05em; }
-.meta-value { font-size: 0.9rem; font-weight: 600; color: var(--color-text-one); display: block; margin-top: 2px; }
+.meta-label { font-size: 0.65rem; color: var(--color-text-four); display: block; text-transform: uppercase; letter-spacing: 0.05em; }
+.meta-value { font-size: 0.85rem; font-weight: 600; color: var(--color-text-one); display: block; margin-top: 1px; }
 
-/* Action buttons — side by side, fill available space */
 .release-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 .action-btn {
   flex: 1;
   justify-content: center;
-  padding: 14px 24px !important;
-  font-size: 0.95rem !important;
+  padding: 12px 20px !important;
+  font-size: 0.9rem !important;
 }
 
-/* ── Changelog ── */
-.changelog-section { padding: 3rem 0; }
-.section-title { font-size: 1.6rem; color: var(--color-text-one); margin-bottom: 2rem; }
+/* ── Changelog Accordion ── */
+.changelog-section { padding: 4rem 0; }
+.section-title { font-size: 1.8rem; color: var(--color-text-one); margin-bottom: 2.5rem; text-align: center; }
 
-.changelog-timeline { display: flex; flex-direction: column; }
+.changelog-accordion {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
-.changelog-item { display: flex; gap: 1.5rem; }
-.changelog-item.is-latest .changelog-card {
+.changelog-panel {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-one);
+}
+
+.changelog-panel:hover {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 1px hsla(206, 100%, 81%, 0.15);
 }
 
-.changelog-rail {
-  display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0; width: 28px; padding-top: 1.5rem;
+.changelog-panel[open] {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
-.rail-dot {
-  width: 28px; height: 28px; border-radius: 50%;
-  background-color: var(--color-surface-five);
+.panel-header {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+.panel-header::-webkit-details-marker { display: none; }
+
+.changelog-panel[open] .panel-header {
+  background-color: var(--color-surface-two);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-header-main {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.panel-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background-color: var(--color-tertiary);
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-.rail-dot.latest {
-  background: linear-gradient(135deg, var(--color-primary) 0%, hsl(206, 80%, 65%) 100%);
-  box-shadow: 0 0 12px hsla(206, 100%, 81%, 0.3);
-}
-.rail-dot .material-symbols-outlined { color: #fff; }
-
-.rail-line {
-  width: 2px; flex: 1; min-height: 20px;
-  background: linear-gradient(180deg, var(--color-border) 0%, transparent 100%);
-}
-
-.changelog-card {
-  flex: 1; margin-bottom: 1.25rem;
-  transition: border-color 0.2s;
-}
-
-.changelog-head {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;
-}
-
-.changelog-title-row {
-  display: flex; align-items: center; gap: 0.75rem;
-}
-
-.changelog-icon-wrap {
-  width: 36px; height: 36px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  background: hsla(206, 80%, 60%, 0.15);
   color: var(--color-primary);
+  transition: all 0.3s ease;
 }
 
-.changelog-title-row h3 { font-size: 1.1rem; color: var(--color-text-one); line-height: 1.2; }
-.changelog-type { font-size: 0.75rem; color: var(--color-text-four); }
+.changelog-panel[open] .panel-icon {
+  background-color: var(--color-primary);
+  color: #fff;
+}
 
-.changelog-right { display: flex; align-items: center; gap: 0.75rem; }
+.panel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+}
 
-.latest-badge {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-  padding: 4px 10px; border-radius: 20px;
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.panel-title h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-one);
+}
+
+.latest-tag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 6px;
   background: linear-gradient(135deg, var(--color-primary), hsl(206, 80%, 65%));
   color: #fff;
 }
 
-.changelog-date { font-size: 0.8rem; color: var(--color-text-four); white-space: nowrap; }
+.panel-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--color-text-four);
+  font-weight: 500;
+}
 
-.changelog-list {
-  list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
+.meta-sep { opacity: 0.5; }
+
+.meta-type {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
 }
-.changelog-list li {
-  font-size: 0.88rem; color: var(--color-text-four);
-  padding-left: 1.5rem; position: relative; line-height: 1.6;
-  display: flex; align-items: baseline; gap: 0.5rem;
+
+.panel-chevron {
+  color: var(--color-text-four);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.change-dot {
-  position: absolute; left: 0; top: 0.55em;
-  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-  background: var(--color-primary);
+
+.changelog-panel[open] .panel-chevron {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+.panel-content {
+  background-color: transparent;
+}
+
+.content-inner {
+  padding: 1.5rem;
+}
+
+.panel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.panel-list li .material-symbols-outlined {
+  font-size: 8px;
+  color: var(--color-primary);
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+
+.panel-list li p {
+  font-size: 0.95rem;
+  color: var(--color-text-four);
+  line-height: 1.6;
 }
 
 /* ── Extras ── */
-.extras-section { padding: 3rem 0; }
-
+.extras-section { padding: 3rem 0; text-align: center; }
 .extras-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -396,69 +471,70 @@ function getUpdateColor(index) {
 
 .extra-card {
   display: flex; flex-direction: column;
-  align-items: flex-start; gap: 1rem;
-  padding: 1.75rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  align-items: center; gap: 1rem;
+  padding: 2rem;
+  text-align: center;
 }
 .extra-card:hover {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 1px hsla(206, 100%, 81%, 0.1);
 }
 
 .extra-icon-wrap {
-  width: 48px; height: 48px; border-radius: 14px;
+  width: 52px; height: 52px; border-radius: 16px;
   display: flex; align-items: center; justify-content: center;
   background: hsla(206, 80%, 60%, 0.15);
   color: var(--color-primary);
+  margin-bottom: 0.5rem;
 }
 
-.extra-body { flex: 1; }
-.extra-body h3 { font-size: 1rem; color: var(--color-text-one); margin-bottom: 0.25rem; font-weight: 600; }
-.extra-body p { font-size: 0.85rem; color: var(--color-text-four); line-height: 1.5; }
+.extra-body { flex: 1; width: 100%; }
+.extra-body h3 { font-size: 1.1rem; color: var(--color-text-one); margin-bottom: 0.5rem; font-weight: 700; }
+.extra-body p { font-size: 0.85rem; color: var(--color-text-four); line-height: 1.6; }
 
 .extra-btn {
   width: 100%; justify-content: center;
-  padding: 10px 20px !important; font-size: 0.85rem !important;
+  margin-top: 0.5rem;
 }
 
 /* ── Source ── */
 .source-section { padding: 2rem 0 5rem; }
-
 .source-card {
-  display: flex; align-items: center; gap: 1.5rem;
-  padding: 2.5rem; border-radius: 16px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1.5rem;
+  padding: 3rem 2rem; border-radius: 24px;
   background-color: var(--color-surface-nine);
+  text-align: center;
 }
 .source-icon {
-  width: 56px; height: 56px; border-radius: 16px;
+  width: 64px; height: 64px; border-radius: 18px;
   background: hsla(206, 80%, 60%, 0.1);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; color: var(--color-primary);
 }
-.source-text { flex: 1; }
-.source-text h3 { font-size: 1.2rem; color: var(--color-text-one); margin-bottom: 0.4rem; }
-.source-text p { font-size: 0.9rem; color: var(--color-text-four); }
+.source-text { flex: 1; width: 100%; }
+.source-text h3 { font-size: 1.4rem; color: var(--color-text-one); margin-bottom: 0.5rem; font-weight: 700; }
+.source-text p { font-size: 0.95rem; color: var(--color-text-four); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+.source-card .md3-btn {
+  padding: 12px 32px !important;
+}
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .page-hero { padding: 3rem 0 2rem; }
   .release-card { padding: 2rem 1.5rem; }
   .release-meta { grid-template-columns: repeat(2, 1fr); }
-  .release-badges { width: 100%; }
   .extras-grid { grid-template-columns: 1fr; }
   .source-card { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
   .source-icon { margin: 0 auto; }
-  .changelog-rail { display: none; }
-  .changelog-item { gap: 0; }
+  .panel-header { padding: 1rem 1.25rem; }
+  .panel-icon { width: 38px; height: 38px; }
+  .panel-title h3 { font-size: 1rem; }
 }
 
 @media (max-width: 480px) {
   .page-hero-content h1 { font-size: 2.2rem; }
-  .release-card-header { flex-direction: column; }
   .release-meta { grid-template-columns: 1fr; }
   .release-actions { flex-direction: column; }
   .action-btn { width: 100%; }
-  .changelog-head { flex-direction: column; align-items: flex-start; }
-  .changelog-right { width: 100%; justify-content: space-between; }
-}
-</style>
+}</style>
