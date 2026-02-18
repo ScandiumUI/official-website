@@ -10,8 +10,8 @@
           <span class="material-symbols-outlined filled theme-icon">{{ isDark ? 'dark_mode' : 'light_mode' }}</span>
         </span>
       </button>
-      <button class="mobile-lang-toggle" @click="toggleLang" aria-label="Switch language">
-        <span class="material-symbols-outlined" style="font-size: 18px;">language</span>
+      <button class="mobile-lang-toggle" @click="toggleLang" aria-label="Switch language" :class="{ 'animating': isLangChanging }">
+        <span class="material-symbols-outlined lang-icon" style="font-size: 18px;">language</span>
         <span class="mobile-lang-code">{{ currentLang }}</span>
       </button>
     </div>
@@ -44,8 +44,8 @@
             </span>
           </button>
           <div class="lang-switcher" ref="langRef">
-            <button @click="langOpen = !langOpen" class="lang-btn" :class="{ selected: langOpen }">
-              <span class="material-symbols-outlined" style="font-size: 18px;">language</span>
+            <button @click="langOpen = !langOpen" class="lang-btn" :class="{ selected: langOpen, 'animating': isLangChanging }">
+              <span class="material-symbols-outlined lang-icon" style="font-size: 18px;">language</span>
               <span class="lang-label">{{ currentLang }}</span>
             </button>
             <transition name="dropdown">
@@ -119,6 +119,7 @@ const isScrolled = ref(false)
 const menuOpen = ref(false)
 const langOpen = ref(false)
 const langRef = ref(null)
+const isLangChanging = ref(false)
 
 const currentLang = computed(() => locale.value)
 
@@ -135,14 +136,25 @@ const languages = [
   { code: 'ID', label: 'Bahasa Indonesia' },
 ]
 
+const triggerLangAnim = () => {
+  isLangChanging.value = true
+  setTimeout(() => {
+    isLangChanging.value = false
+  }, 400)
+}
+
 const setLang = (code) => {
-  setLocale(code)
+  if (locale.value !== code) {
+    setLocale(code)
+    triggerLangAnim()
+  }
   langOpen.value = false
 }
 
 const toggleLang = () => {
   const next = locale.value === 'EN' ? 'ID' : 'EN'
   setLocale(next)
+  triggerLangAnim()
 }
 
 const handleScroll = () => {
@@ -280,6 +292,20 @@ onUnmounted(() => {
 .lang-btn.selected {
   background-color: var(--color-tertiary);
   color: var(--color-primary);
+}
+
+.lang-icon {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lang-btn.animating .lang-icon,
+.mobile-lang-toggle.animating .lang-icon {
+  animation: lang-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes lang-pop {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .lang-label {
