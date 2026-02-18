@@ -1,13 +1,5 @@
 <template>
   <div class="wiki-page">
-    <section class="page-hero">
-      <div class="wrapper">
-        <div class="page-hero-content animate-fade-up">
-          <h1>{{ t('wiki.title') }}</h1>
-          <p>{{ t('wiki.desc') }}</p>
-        </div>
-      </div>
-    </section>
     <section class="wiki-content">
       <div class="wrapper">
         <div class="wiki-layout">
@@ -25,7 +17,7 @@
           </aside>
           <div class="wiki-main">
             <article id="getting-started" class="wiki-section animate-fade-up centered-header" data-reveal>
-              <h2>{{ t('wiki.gettingStarted') }}</h2>
+              <h1 class="wiki-main-title">{{ t('wiki.gettingStarted') }}</h1>
               <p>{{ t('wiki.gettingStartedDesc') }}</p>
 
               <div class="requirements-list">
@@ -201,32 +193,16 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.page-hero {
-  padding: 6rem 0 4rem;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.page-hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.page-hero-content h1 {
-  font-size: 3.5rem;
+.wiki-main-title {
+  font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 1rem;
+  color: var(--color-text-one);
+  margin-bottom: 0.5rem;
+  text-align: center;
   letter-spacing: -0.02em;
 }
 
-.page-hero-content p {
-  font-size: 1.1rem;
-  color: var(--color-text-four);
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.wiki-content { padding: 3rem 0 5rem; }
+.wiki-content { padding: 4rem 0 5rem; }
 
 .wiki-layout {
   display: grid;
