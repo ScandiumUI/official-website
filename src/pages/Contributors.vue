@@ -4,10 +4,6 @@
     <section class="page-hero">
       <div class="wrapper">
         <div class="page-hero-content animate-fade-up">
-          <div class="md3-chip">
-            <span class="material-symbols-outlined filled" style="font-size: 16px;">group</span>
-            {{ t('contributors.chip') }}
-          </div>
           <h1>{{ t('contributors.title') }}</h1>
           <p>{{ t('contributors.desc') }}</p>
         </div>
@@ -131,22 +127,28 @@ const contributors = [
   border-bottom: 1px solid var(--color-border);
 }
 
-.page-hero-content { max-width: 600px; }
+.page-hero-content { 
+  max-width: 800px; 
+  margin: 0 auto;
+  text-align: center;
+}
 .page-hero-content .md3-chip { margin-bottom: 1.5rem; }
 .page-hero-content h1 { margin-bottom: 0.75rem; }
 
 /* === CORE TEAM === */
-.team-section { padding: 3rem 0; }
+.team-section { padding: 3rem 0; text-align: center; }
 
 .section-title {
   font-size: 1.75rem;
   color: var(--color-text-one);
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .section-subtitle {
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
   max-width: 550px;
+  text-align: center;
 }
 
 .team-grid {
@@ -281,16 +283,35 @@ const contributors = [
   flex-wrap: wrap;
 }
 
+@media (max-width: 450px) {
+  .cta-actions .md3-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .page-hero { padding: 3rem 0 2rem; }
   .team-grid { grid-template-columns: 1fr; }
   .contrib-grid { grid-template-columns: 1fr; }
   .cta-card { padding: 2.5rem 1.5rem; }
+  .cta-actions { 
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .cta-actions .md3-btn {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    justify-content: center;
+  }
+  .cta-actions .md3-btn svg { display: none; }
 }
 
 @media (max-width: 450px) {
   .page-hero-content h1 { font-size: 2.2rem; }
-  .cta-actions { flex-direction: column; align-items: center; }
 }
 </style>
