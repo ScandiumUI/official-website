@@ -24,12 +24,12 @@
             </nav>
           </aside>
           <div class="wiki-main">
-            <article id="getting-started" class="wiki-section animate-fade-up centered-header">
+            <article id="getting-started" class="wiki-section animate-fade-up centered-header" data-reveal>
               <h2>{{ t('wiki.gettingStarted') }}</h2>
               <p>{{ t('wiki.gettingStartedDesc') }}</p>
 
               <div class="requirements-list">
-                <div v-for="req in requirements" :key="req.icon" class="req-item md3-card-outlined">
+                <div v-for="(req, i) in requirements" :key="req.icon" class="req-item md3-card-outlined" data-reveal :data-reveal-delay="i * 100">
                   <div class="req-icon-box">
                     <span class="material-symbols-outlined filled">{{ req.icon }}</span>
                   </div>
@@ -40,12 +40,12 @@
                 </div>
               </div>
             </article>
-            <article id="installation" class="wiki-section animate-fade-up centered-header">
+            <article id="installation" class="wiki-section animate-fade-up centered-header" data-reveal>
               <h2>{{ t('wiki.installTitle') }}</h2>
               <p>{{ t('wiki.installDesc') }}</p>
 
               <div class="steps-grid-expand">
-                <details v-for="(step, i) in steps" :key="i" class="step-expand-item">
+                <details v-for="(step, i) in steps" :key="i" class="step-expand-item" data-reveal :data-reveal-delay="i * 100">
                   <summary>
                     <div class="step-item-flex">
                       <div class="step-number-box">
@@ -63,12 +63,12 @@
                 </details>
               </div>
             </article>
-            <article id="features" class="wiki-section animate-fade-up centered-header">
+            <article id="features" class="wiki-section animate-fade-up centered-header" data-reveal>
               <h2>{{ t('wiki.featuresTitle') }}</h2>
               <p>{{ t('wiki.featuresDesc') }}</p>
 
               <div class="feature-grid-expand">
-                <details v-for="feat in wikiFeatures" :key="feat.icon" class="feature-expand-item">
+                <details v-for="(feat, i) in wikiFeatures" :key="feat.icon" class="feature-expand-item" data-reveal :data-reveal-delay="i * 100">
                   <summary>
                     <div class="feature-item-flex md3-card-outlined">
                       <div class="feature-icon-column">
@@ -86,10 +86,10 @@
                 </details>
               </div>
             </article>
-            <article id="faq" class="wiki-section animate-fade-up centered-header">
+            <article id="faq" class="wiki-section animate-fade-up centered-header" data-reveal>
               <h2>{{ t('wiki.faqTitle') }}</h2>
               <div class="faq-list">
-                <details v-for="(faq, i) in faqs" :key="i" class="faq-item md3-card-outlined">
+                <details v-for="(faq, i) in faqs" :key="i" class="faq-item md3-card-outlined" data-reveal :data-reveal-delay="i * 100">
                   <summary>
                     <span class="faq-q">{{ faq.q }}</span>
                     <span class="material-symbols-outlined faq-chevron">expand_more</span>
@@ -98,10 +98,10 @@
                 </details>
               </div>
             </article>
-            <article id="troubleshooting" class="wiki-section animate-fade-up centered-header">
+            <article id="troubleshooting" class="wiki-section animate-fade-up centered-header" data-reveal>
               <h2>{{ t('wiki.troubleTitle') }}</h2>
               <div class="trouble-grid">
-                <div v-for="(item, i) in troubleshoot" :key="i" class="trouble-card md3-card">
+                <div v-for="(item, i) in troubleshoot" :key="i" class="trouble-card md3-card" data-reveal :data-reveal-delay="i * 100">
                   <div class="trouble-header">
                     <span class="material-symbols-outlined filled" style="color: var(--color-md-error);">error</span>
                     <h3>{{ item.problem }}</h3>
@@ -120,8 +120,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from '../i18n/index.js'
+import { useScrollReveal } from '../composables/useScrollReveal.js'
 
 const { t } = useI18n()
+useScrollReveal()
 
 const activeSection = ref('getting-started')
 

@@ -65,7 +65,7 @@
   --shadow-nav: var(--sc-shadow-nav);
 }
 
-/* ===== DARK THEME (default) ===== */
+
 :root,
 [data-theme="dark"] {
   --sc-text-one: hsl(206, 100%, 94%);
@@ -102,7 +102,7 @@
   color-scheme: dark;
 }
 
-/* ===== LIGHT THEME ===== */
+
 [data-theme="light"] {
   --sc-text-one: hsl(215, 28%, 14%);
   --sc-primary: hsl(206, 70%, 38%);
@@ -423,11 +423,21 @@ hr {
 
 .animate-fade-up {
   opacity: 0;
+}
+
+
+[data-reveal].animate-fade-up.revealed,
+
+.animate-fade-up:not([data-reveal]) {
   animation: fade-up 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-fade-in {
   opacity: 0;
+}
+
+[data-reveal].animate-fade-in.revealed,
+.animate-fade-in:not([data-reveal]) {
   animation: fade-in 0.5s ease-out forwards;
 }
 

@@ -13,9 +13,9 @@
     <!-- Core Team -->
     <section class="team-section">
       <div class="wrapper">
-        <h2 class="section-title animate-fade-up">{{ t('contributors.coreTeam') }}</h2>
+        <h2 class="section-title animate-fade-up" data-reveal>{{ t('contributors.coreTeam') }}</h2>
         <div class="team-grid">
-          <div v-for="(member, i) in coreTeam" :key="member.name" class="member-card md3-card-elevated animate-fade-up" :class="'delay-' + (i + 1) + '00'">
+          <div v-for="(member, i) in coreTeam" :key="member.name" class="member-card md3-card-elevated animate-fade-up" data-reveal :data-reveal-delay="((i + 1) * 100)">
             <img :src="member.avatar" :alt="member.name" class="member-avatar-img" loading="lazy" />
             <h3>{{ member.name }}</h3>
             <span class="member-handle">@{{ member.handle }}</span>
@@ -38,10 +38,10 @@
     <!-- Contributors List -->
     <section class="contrib-section">
       <div class="wrapper">
-        <h2 class="section-title animate-fade-up">{{ t('contributors.contributorsTitle') }}</h2>
-        <p class="section-subtitle animate-fade-up">{{ t('contributors.contributorsDesc') }}</p>
+        <h2 class="section-title animate-fade-up" data-reveal>{{ t('contributors.contributorsTitle') }}</h2>
+        <p class="section-subtitle animate-fade-up" data-reveal>{{ t('contributors.contributorsDesc') }}</p>
         <div class="contrib-grid">
-          <div v-for="(c, i) in contributors" :key="c.name" class="contrib-item md3-card-outlined animate-fade-up" :class="'delay-' + ((i % 4 + 1)) + '00'">
+          <div v-for="(c, i) in contributors" :key="c.name" class="contrib-item md3-card-outlined animate-fade-up" data-reveal :data-reveal-delay="((i % 4 + 1)) * 100">
             <div class="contrib-avatar" :style="{ backgroundColor: c.color }">
               <span>{{ c.initials }}</span>
             </div>
@@ -58,7 +58,7 @@
     <!-- Contribute CTA -->
     <section class="cta-section">
       <div class="wrapper">
-        <div class="cta-card animate-fade-up">
+        <div class="cta-card animate-fade-up" data-reveal>
           <span class="material-symbols-outlined filled cta-icon">volunteer_activism</span>
           <h2>{{ t('contributors.ctaTitle') }}</h2>
           <p>{{ t('contributors.ctaDesc') }}</p>
@@ -80,8 +80,10 @@
 
 <script setup>
 import { useI18n } from '../i18n/index.js'
+import { useScrollReveal } from '../composables/useScrollReveal.js'
 
 const { t } = useI18n()
+useScrollReveal()
 
 const coreTeam = [
   {
